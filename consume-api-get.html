@@ -15,7 +15,7 @@ Books Details:
 
 <script>
     function loadUsers() {
-	  axios.get('http://127.0.0.1:8000/book')
+	  axios.get('http://api-books.reformedtech.org/book')
 		.then(function (response) {
 		  var booksList = response.data;
 		  var list = '';
