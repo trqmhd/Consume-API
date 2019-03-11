@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books List!</title>
+</head>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+<button onclick="loadUsers()">Load Books</button>
+<br>
+Books Details:
+<div id="bookInfo">
+</div>
+
+
+<script>
+    function loadUsers() {
+	  axios.get('http://127.0.0.1:8000/book')
+		.then(function (response) {
+		  var booksList = response.data;
+		  var list = '';
+		  booksList.forEach(function(bookData, index) {
+			list += '<ul>';
+			list += '<li>Id: ' + bookData.id + '</li>';
+			list += '<li>Title: ' + bookData.title + '</li>';
+			list += '<li>Author: ' + bookData.author + '</li>';
+      list += '<li>ISBN: ' + bookData.isbn + '</li>';
+      list += '<li>Publication: ' + bookData.publication + '</li>';
+			list += '</ul>';
+		  });
+		  document.getElementById('bookInfo').innerHTML = list;
+		});
+    }
+</script>
+</body>
+</html>

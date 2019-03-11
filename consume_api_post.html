@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Consuming an API!</title>
+</head>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+<form action="#">
+    Title: <input type="text" id="title" ><br><br>
+    Author: <input type="text" id="author"><br><br>
+    ISBN: <input type="text" id="isbn"><br><br>
+    Publication: <input type="text" id="publication"><br><br>
+    <button onclick="post_data()">Post</button>
+
+</form>
+
+<br>
+
+<div id="info">
+
+</div>
+
+
+<script>
+    function post_data() {
+        event.preventDefault();
+
+        axios.post("http://127.0.0.1:8000/book", {
+            "title": document.getElementById('title').value,
+            "author": document.getElementById('author').value,
+            "isbn": document.getElementById('isbn').value,
+            "publication": document.getElementById('publication').value
+        })
+            .then(function (response) {
+                console.log(response.data);
+                var insertedBookData = response.data;
+                console.log(insertedBookData.name);
+                var bookInfo = `Title: ${insertedBookData.title} <br> Author: ${insertedUserData.author} <br> ID: ${insertedBookData.id} <br> ISBN: ${insertedBookData.isbn} <br> Publication: ${insertedBookData.publication}`;
+                document.getElementById('info').innerHTML = bookInfo;
+
+            })
+            .catch(function (error) {
+                console.log(error.response);
+
+                var allErrors = error.response.data;
+                var errorString = '<p style="color:red">';
+                for (var error in allErrors) {
+                    errorString += error + " : " + allErrors[error] + '<br>';
+                }
+
+
+                document.getElementById('info').innerHTML = errorString + '</p>';
+
+            });
+    }
+</script>
+</body>
+</html>
